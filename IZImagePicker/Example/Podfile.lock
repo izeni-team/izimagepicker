@@ -1,0 +1,16 @@
+PODS:
+  - IZImagePicker (0.1.0)
+
+DEPENDENCIES:
+  - IZImagePicker (from `../`)
+
+EXTERNAL SOURCES:
+  IZImagePicker:
+    :path: ../
+
+SPEC CHECKSUMS:
+  IZImagePicker: 1fc512dcf848b04db1d038e3afdfb7c14c4e32db
+
+PODFILE CHECKSUM: 8d3f51a56b891913e18bcbfe672b39850f4a4009
+
+COCOAPODS: 1.0.1

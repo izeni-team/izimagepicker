@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'IZImagePicker_Example' do
+  pod 'IZImagePicker', :path => '../'
+
+  target 'IZImagePicker_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
