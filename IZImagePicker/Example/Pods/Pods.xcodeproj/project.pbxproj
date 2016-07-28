@@ -13,9 +13,9 @@
 		5AB0745430A39421083696344B88672D /* IZImagePicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A1E9A8BD91716A3C35527BB09F31ECF4 /* IZImagePicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5E98460D28EA9A36BC1C71D17CECD0D7 /* Pods-IZImagePicker_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F79D6CBCC8E7D70589B6E3E8A0C210D6 /* Pods-IZImagePicker_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D3F8D6FD60AF0172AC8646CF4FCAE56 /* Pods-IZImagePicker_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 86777F57B9C14A0A30F4AC4B24FF7A4D /* Pods-IZImagePicker_Tests-dummy.m */; };
-		8D53BEFC0A0BCB24888BA7F1208E4708 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2372132C9CFF967F733941107D7ED621 /* ReplaceMe.swift */; };
 		A1DE1B39738DAFB680584DBE1680148C /* Pods-IZImagePicker_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F3F945FE79B19E2C1F0210128E295B /* Pods-IZImagePicker_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A311DC0B5716EB5FCF16491419015AEA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		D4B08B681D4A5EC400CD5BE8 /* IZImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B08B671D4A5EC400CD5BE8 /* IZImagePicker.swift */; };
 		E7AA6A292517909F5D2C87FD870593E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +34,6 @@
 		15476B971E51601E4884206EE45042C8 /* Pods-IZImagePicker_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IZImagePicker_Example-frameworks.sh"; sourceTree = "<group>"; };
 		15D6796E0AC7F7293459D4FFB7D58875 /* Pods-IZImagePicker_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IZImagePicker_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		216EB577E9A0EE38EC5E3A8F2E1FAE57 /* Pods-IZImagePicker_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-IZImagePicker_Tests.modulemap"; sourceTree = "<group>"; };
-		2372132C9CFF967F733941107D7ED621 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceMe.swift; sourceTree = "<group>"; };
 		24F3F945FE79B19E2C1F0210128E295B /* Pods-IZImagePicker_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-IZImagePicker_Example-umbrella.h"; sourceTree = "<group>"; };
 		31EC39262BF38839F105424B4DD16F6F /* Pods-IZImagePicker_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IZImagePicker_Tests-resources.sh"; sourceTree = "<group>"; };
 		328A85F90EE6DBB4E20617D248647EEA /* Pods-IZImagePicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IZImagePicker_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -58,6 +57,7 @@
 		C259BB5CBFD86374AF364236DCF91611 /* Pods-IZImagePicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IZImagePicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C58CF1D10BC9B806A5CB9059F02059CF /* IZImagePicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = IZImagePicker.modulemap; sourceTree = "<group>"; };
 		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D4B08B671D4A5EC400CD5BE8 /* IZImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IZImagePicker.swift; sourceTree = "<group>"; };
 		D724B10D3925250F9EF4962933A87537 /* IZImagePicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IZImagePicker-prefix.pch"; sourceTree = "<group>"; };
 		DF9DBF4F884012DBEEAD310D99C98BA9 /* Pods-IZImagePicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-IZImagePicker_Example.modulemap"; sourceTree = "<group>"; };
 		EA37219F64DEEC66AF0EDD1D78D597E4 /* IZImagePicker.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IZImagePicker.xcconfig; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 		8B5206D0A2B80C1CDA09E8B43E24B771 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2372132C9CFF967F733941107D7ED621 /* ReplaceMe.swift */,
+				D4B08B671D4A5EC400CD5BE8 /* IZImagePicker.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -345,8 +345,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4B08B681D4A5EC400CD5BE8 /* IZImagePicker.swift in Sources */,
 				23E1F3442AA7AC88E8472456E1B0A433 /* IZImagePicker-dummy.m in Sources */,
-				8D53BEFC0A0BCB24888BA7F1208E4708 /* ReplaceMe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +445,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA37219F64DEEC66AF0EDD1D78D597E4 /* IZImagePicker.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -507,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA37219F64DEEC66AF0EDD1D78D597E4 /* IZImagePicker.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
