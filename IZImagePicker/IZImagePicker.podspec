@@ -38,5 +38,5 @@ This library is to make UIImagePicker easier to use.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency TOCropViewController
+  s.dependency 'TOCropViewController'
 end

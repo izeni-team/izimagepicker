@@ -1,9 +1,9 @@
 {
   "name": "IZImagePicker",
   "version": "0.1.0",
-  "summary": "A short description of IZImagePicker.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/IZImagePicker",
+  "summary": "A subclass for UIImagePicker",
+  "description": "This library is to make UIImagePicker easier to use.",
+  "homepage": "https://github.com/izeni-team/IZImagePicker",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -18,5 +18,10 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "IZImagePicker/Classes/**/*"
+  "source_files": "IZImagePicker/Classes/**/*",
+  "dependencies": {
+    "TOCropViewController": [
+
+    ]
+  }
 }

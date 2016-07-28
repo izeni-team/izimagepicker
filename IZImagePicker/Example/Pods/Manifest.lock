@@ -1,5 +1,7 @@
 PODS:
-  - IZImagePicker (0.1.0)
+  - IZImagePicker (0.1.0):
+    - TOCropViewController
+  - TOCropViewController (2.0.6)
 
 DEPENDENCIES:
   - IZImagePicker (from `../`)
@@ -9,7 +11,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  IZImagePicker: 1fc512dcf848b04db1d038e3afdfb7c14c4e32db
+  IZImagePicker: e4c443fd4e8de4885dab1ae8891587a2719e5b44
+  TOCropViewController: d3f09808012f4ec720886f88553e9a81a4847c39
 
 PODFILE CHECKSUM: 8d3f51a56b891913e18bcbfe672b39850f4a4009
 
