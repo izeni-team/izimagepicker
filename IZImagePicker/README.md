@@ -1,9 +1,9 @@
 # IZImagePicker
 
-[![CI Status](http://img.shields.io/travis/Izeni/IZImagePicker.svg?style=flat)](https://travis-ci.org/Izeni/IZImagePicker)
+<!--[![CI Status](http://img.shields.io/travis/Izeni/IZImagePicker.svg?style=flat)](https://travis-ci.org/Izeni/IZImagePicker)
 [![Version](https://img.shields.io/cocoapods/v/IZImagePicker.svg?style=flat)](http://cocoapods.org/pods/IZImagePicker)
 [![License](https://img.shields.io/cocoapods/l/IZImagePicker.svg?style=flat)](http://cocoapods.org/pods/IZImagePicker)
-[![Platform](https://img.shields.io/cocoapods/p/IZImagePicker.svg?style=flat)](http://cocoapods.org/pods/IZImagePicker)
+[![Platform](https://img.shields.io/cocoapods/p/IZImagePicker.svg?style=flat)](http://cocoapods.org/pods/IZImagePicker) -->
 
 ## Example
 
