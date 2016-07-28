@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import IZImagePicker
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var image: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        IZImagePicker.pickImage(vc: self, useCamera: true, useLibrary: true, preferFrontCamera: false, iPadPopoverSource: view, aspectRatio: 1, callback: { (image) in
+            self.image.image = image
+            }) { 
+                print("CANCELD")
+        }
     }
 
 }
