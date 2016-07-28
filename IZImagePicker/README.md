@@ -11,6 +11,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
+Currently none.
+
 ## Installation
 
 IZImagePicker is available through [CocoaPods](http://cocoapods.org). To install
@@ -22,7 +24,7 @@ pod "IZImagePicker"
 
 ## Author
 
-Izeni, tallred@izeni.com
+Izeni, iznei.com, tallred@izeni.com
 
 ## License
 
