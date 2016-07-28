@@ -8,8 +8,11 @@
 
 import AVFoundation
 import Photos
+import TOCropViewController
 
-public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TOCropViewControllerDelegate {
+    private static var currentInstance: IZImagePicker?
+    
     private var parentVC: UIViewController!
     private var aspectRatio: CGFloat!
     private var preferFrontCamera: Bool = false
@@ -17,6 +20,9 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     private var libraryEnabled: Bool = true
     
     private var popoverSource: UIView! //iPad
+    
+    private var callback: ((image: UIImage) -> Void)! // This is required
+    private var cancelled: (() -> Void)? // This is not required
     
     private var cameraPermissionGranted: Bool {
         return AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == .Authorized
@@ -40,7 +46,21 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     
     private override init() {}
     
-    private func pickImage(vc vc: UIViewController, useCamera: Bool, useLibrary: Bool, preferFrontCamera: Bool, iPadPopoverSource: UIView, aspectRatio: CGFloat = 1) {
+    public static func pickImage(vc vc: UIViewController, useCamera: Bool = true, useLibrary: Bool = true, preferFrontCamera: Bool = true, iPadPopoverSource: UIView, aspectRatio: CGFloat = 1, callback: (image: UIImage) -> Void, cancelled: (() -> Void)? = nil) {
+        assert(currentInstance == nil, "You can't pick two images at the same time. Wait for the other picker to close first.")
+        guard currentInstance == nil else {
+            cancelled?()
+            return
+        }
+        
+        let newImagePicker = IZImagePicker()
+        currentInstance = newImagePicker
+        newImagePicker.pickImage(vc: vc, useCamera: useCamera, useLibrary: useLibrary, preferFrontCamera: preferFrontCamera, iPadPopoverSource: iPadPopoverSource, aspectRatio: aspectRatio)
+        newImagePicker.callback = callback
+        newImagePicker.cancelled = cancelled
+    }
+    
+    private func pickImage(vc vc: UIViewController, useCamera: Bool, useLibrary: Bool, preferFrontCamera: Bool, iPadPopoverSource: UIView, aspectRatio: CGFloat) {
         self.aspectRatio = aspectRatio
         self.popoverSource = iPadPopoverSource
         self.preferFrontCamera = preferFrontCamera
@@ -51,7 +71,7 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
         showPickerSourceAlert()
     }
     
-    // MARK: -- Camera Action
+    // MARK: - Camera Action
     
     private func takePhoto() {
         if cameraPermissionGranted {
@@ -152,7 +172,9 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
                 pickLibraryPhoto()
             }
         } else if alert.actions.count == 2 {
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+                self.didCancel()
+            }))
             show(alert)
         } else {
             restrictedAlert("Camera and Photo Library")
@@ -161,7 +183,9 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     
     private func restrictedAlert(accessType: String) {
         let authAlert = UIAlertController(title: "\(accessType) Access is Restricted", message: "\(getAppName()) could not access the \(accessType) on this device.", preferredStyle: .Alert)
-        authAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        authAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { _ in
+            self.didCancel()
+        }))
         show(authAlert)
     }
     
@@ -177,5 +201,31 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
         return NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
     }
     
+    //MARK: - Cropper
+    private func presentCropViewController(image: UIImage) {
+        let cropViewController = TOCropViewController(croppingStyle: .Circular, image: image)
+        cropViewController.delegate = self
+        self.parentVC.presentViewController(cropViewController, animated: true, completion: nil)
+    }
+    
+    public func cropViewController(cropViewController: TOCropViewController!, didCropToCircularImage image: UIImage!, withRect cropRect: CGRect, angle: Int) {
+        //image is the new cropped image.
+        self.callback(image: image)
+        IZImagePicker.currentInstance = nil
+    }
+    
+    private func didCancel() {
+        cancelled?()
+        IZImagePicker.currentInstance = nil
+    }
+    
+    public func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        presentCropViewController(image)
+    }
+    
+    public func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        didCancel()
+    }
 }
-
