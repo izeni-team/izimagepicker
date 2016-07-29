@@ -211,6 +211,7 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     public func cropViewController(cropViewController: TOCropViewController!, didCropToCircularImage image: UIImage!, withRect cropRect: CGRect, angle: Int) {
         //image is the new cropped image.
         self.callback(image: image)
+        cropViewController.dismissViewControllerAnimated(true, completion: nil)
         IZImagePicker.currentInstance = nil
     }
     
