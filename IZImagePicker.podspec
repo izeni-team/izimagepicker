@@ -18,14 +18,14 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-This library is to make UIImagePicker easier to use.
+This library is to make UIImagePicker easier to use. It makes it so all you need is one function to do everything: handle the camera and library; handle cropping. Implement one function to handle everything and output a usable UIImage.
                        DESC
 
   s.homepage         = 'https://github.com/izeni-team/IZImagePicker'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Izeni' => 'tallred@izeni.com' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/IZImagePicker.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/izeni-team/IZImagePicker.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
