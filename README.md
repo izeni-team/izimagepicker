@@ -9,6 +9,20 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+To use IZImagePicker:
+
+```
+class MyViewController: UIViewController {
+   ...
+   @IBAction func changeProfileImageTapped() {
+       IZImagePicker.pickImage(vc: self, useCamera: true, useLibrary: true, preferFrontCamera: true, iPadPopoverSource: view, aspectRatio: 1, callback: { (image) in
+            self.uploadProfileImage(image)
+            })
+   }
+   ...
+}
+```
+
 ## Requirements
 
 Currently none.
