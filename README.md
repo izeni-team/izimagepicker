@@ -38,7 +38,7 @@ pod "IZImagePicker"
 
 ## Author
 
-Izeni, iznei.com, tallred@izeni.com
+Izeni, izeni.com, tallred@izeni.com, bhenderson@izeni.com, mtenney@izeni.com, ssmith@izeni.com
 
 ## License
 
