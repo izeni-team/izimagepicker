@@ -233,7 +233,7 @@ open class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
-    open func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    public func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
         didCancel()
     }
