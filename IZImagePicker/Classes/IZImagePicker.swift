@@ -10,43 +10,43 @@ import AVFoundation
 import Photos
 import TOCropViewController
 
-public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TOCropViewControllerDelegate {
-    private static var currentInstance: IZImagePicker?
+open class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TOCropViewControllerDelegate {
+    fileprivate static var currentInstance: IZImagePicker?
     
-    private var parentVC: UIViewController!
-    private var aspectRatio: CGFloat!
-    private var preferFrontCamera: Bool = false
-    private var cameraEnabled: Bool = true
-    private var libraryEnabled: Bool = true
+    fileprivate var parentVC: UIViewController!
+    fileprivate var aspectRatio: CGFloat!
+    fileprivate var preferFrontCamera: Bool = false
+    fileprivate var cameraEnabled: Bool = true
+    fileprivate var libraryEnabled: Bool = true
     
-    private var popoverSource: UIView! //iPad
+    fileprivate var popoverSource: UIView! //iPad
     
-    private var callback: ((image: UIImage) -> Void)! // This is required
-    private var cancelled: (() -> Void)? // This is not required
+    fileprivate var callback: ((_ image: UIImage) -> Void)! // This is required
+    fileprivate var cancelled: (() -> Void)? // This is not required
     
-    private var cameraPermissionGranted: Bool {
-        return AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == .Authorized
+    fileprivate var cameraPermissionGranted: Bool {
+        return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized
     }
     
-    private var libraryPermissionGranted: Bool {
-        return PHPhotoLibrary.authorizationStatus() == .Authorized
+    fileprivate var libraryPermissionGranted: Bool {
+        return PHPhotoLibrary.authorizationStatus() == .authorized
     }
     
-    private var isCameraAvailable: Bool {
-        return UIImagePickerController.isSourceTypeAvailable(.Camera)
+    fileprivate var isCameraAvailable: Bool {
+        return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
     
-    private var isLibraryAvaiable: Bool {
-        return UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
+    fileprivate var isLibraryAvaiable: Bool {
+        return UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
     }
     
-    private var isIpad: Bool {
-        return UIDevice.currentDevice().userInterfaceIdiom == .Pad
+    fileprivate var isIpad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
     }
     
-    private override init() {}
+    fileprivate override init() {}
     
-    public static func pickImage(vc vc: UIViewController, useCamera: Bool = true, useLibrary: Bool = true, preferFrontCamera: Bool = true, iPadPopoverSource: UIView, aspectRatio: CGFloat = 1, callback: (image: UIImage) -> Void, cancelled: (() -> Void)? = nil) {
+    open static func pickImage(vc: UIViewController, useCamera: Bool = true, useLibrary: Bool = true, preferFrontCamera: Bool = true, iPadPopoverSource: UIView, aspectRatio: CGFloat = 1, callback: @escaping (_ image: UIImage) -> Void, cancelled: (() -> Void)? = nil) {
         assert(currentInstance == nil, "You can't pick two images at the same time. Wait for the other picker to close first.")
         guard currentInstance == nil else {
             cancelled?()
@@ -60,7 +60,7 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
         newImagePicker.cancelled = cancelled
     }
     
-    private func pickImage(vc vc: UIViewController, useCamera: Bool, useLibrary: Bool, preferFrontCamera: Bool, iPadPopoverSource: UIView, aspectRatio: CGFloat) {
+    fileprivate func pickImage(vc: UIViewController, useCamera: Bool, useLibrary: Bool, preferFrontCamera: Bool, iPadPopoverSource: UIView, aspectRatio: CGFloat) {
         self.aspectRatio = aspectRatio
         self.popoverSource = iPadPopoverSource
         self.preferFrontCamera = preferFrontCamera
@@ -73,13 +73,13 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     
     // MARK: - Camera Action
     
-    private func takePhoto() {
+    fileprivate func takePhoto() {
         if cameraPermissionGranted {
             let picker = UIImagePickerController()
             picker.delegate = self
-            picker.sourceType = .Camera //Defaults to .PhotoLibrary
-            if preferFrontCamera && UIImagePickerController.isCameraDeviceAvailable(.Front) {
-                picker.cameraDevice = .Front
+            picker.sourceType = .camera //Defaults to .PhotoLibrary
+            if preferFrontCamera && UIImagePickerController.isCameraDeviceAvailable(.front) {
+                picker.cameraDevice = .front
             }
             show(picker)
         } else {
@@ -89,11 +89,11 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     
     // MARK: - Library Action
     
-    private func pickLibraryPhoto() {
+    fileprivate func pickLibraryPhoto() {
         if libraryPermissionGranted {
             let picker = UIImagePickerController()
             picker.delegate = self
-            picker.sourceType = .PhotoLibrary
+            picker.sourceType = .photoLibrary
             show(picker)
         } else {
             requestLibraryPermission()
@@ -102,17 +102,17 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     
     //MARK: - Permissions
     
-    private func requestCameraPermission() {
-        var authorization = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+    fileprivate func requestCameraPermission() {
+        var authorization = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
         if !isCameraAvailable {
-            authorization = .Restricted
+            authorization = .restricted
         }
         switch authorization {
-        case .Denied:
-            deniedAlert("Camera")
-        case .NotDetermined:
-            AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { _ in
-                dispatch_async(dispatch_get_main_queue(), { 
+        case .denied:
+            deniedAlert(accessType: "Camera")
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { _ in
+                DispatchQueue.main.async(execute: { 
                     self.takePhoto()
                 })
             })
@@ -120,18 +120,18 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
         }
     }
     
-    private func requestLibraryPermission() {
+    fileprivate func requestLibraryPermission() {
         var authorization = PHPhotoLibrary.authorizationStatus()
         if !isLibraryAvaiable {
-            authorization = .Restricted
+            authorization = .restricted
         }
         
         switch authorization {
-        case .Denied:
-            deniedAlert("Photo Library")
-        case .NotDetermined:
+        case .denied:
+            deniedAlert(accessType: "Photo Library")
+        case .notDetermined:
             PHPhotoLibrary.requestAuthorization({ (allow) in
-                dispatch_async(dispatch_get_main_queue(), { 
+                DispatchQueue.main.async(execute: { 
                     self.pickLibraryPhoto()
                 })
             })
@@ -141,30 +141,35 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
     
     // MARK: - Alerts
     
-    private func show(vc: UIViewController) {
-        dispatch_async(dispatch_get_main_queue()) { 
+    fileprivate func show(_ vc: UIViewController) {
+        DispatchQueue.main.async { 
             let alert = vc as? UIAlertController
-            if self.isIpad && alert?.preferredStyle == .ActionSheet {
+            NSLog("(5) %p", alert ?? NSNull())
+            if self.isIpad && alert?.preferredStyle == .actionSheet {
                 let popover = UIPopoverController(contentViewController: vc)
-                popover.presentPopoverFromRect(self.popoverSource.bounds, inView: self.popoverSource, permittedArrowDirections: .Any, animated: true)
+                popover.present(from: self.popoverSource.bounds, in: self.popoverSource, permittedArrowDirections: .any, animated: true)
             } else {
-                self.parentVC.presentViewController(vc, animated: true, completion: nil)
+                self.parentVC.present(vc, animated: true, completion: nil)
             }
         }
     }
     
-    private func showPickerSourceAlert() {
+    fileprivate func showPickerSourceAlert() {
         let alert = UIAlertController()
+        NSLog("(4) %p", alert)
+        
         if isCameraAvailable && cameraEnabled {
-            alert.addAction(UIAlertAction(title: "Take Photo", style: .Default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
                 self.takePhoto()
             }))
         }
+        
         if isLibraryAvaiable && libraryEnabled {
-            alert.addAction(UIAlertAction(title: "Choose From Library", style: .Default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "Choose From Library", style: .default, handler: { _ in
                 self.pickLibraryPhoto()
             }))
         }
+        
         if alert.actions.count == 1 {
             if cameraEnabled {
                 takePhoto()
@@ -172,61 +177,64 @@ public class IZImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigat
                 pickLibraryPhoto()
             }
         } else if alert.actions.count == 2 {
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
                 self.didCancel()
             }))
             show(alert)
         } else {
-            restrictedAlert("Camera and Photo Library")
+            restrictedAlert(accessType: "Camera and Photo Library")
         }
     }
     
-    private func restrictedAlert(accessType: String) {
-        let authAlert = UIAlertController(title: "\(accessType) Access is Restricted", message: "\(getAppName()) could not access the \(accessType) on this device.", preferredStyle: .Alert)
-        authAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { _ in
+    fileprivate func restrictedAlert(accessType: String) {
+        let authAlert = UIAlertController(title: "\(accessType) Access is Restricted", message: "\(getAppName()) could not access the \(accessType) on this device.", preferredStyle: .alert)
+        NSLog("(3) %p", authAlert)
+        authAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
             self.didCancel()
         }))
         show(authAlert)
     }
     
-    private func deniedAlert(accessType: String) {
-        let authAlert = UIAlertController(title: "\(accessType) Access is Denied", message: "\(getAppName()) does not have access to your \(accessType). You can enable access in privacy settings.", preferredStyle: .Alert)
-        authAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+    fileprivate func deniedAlert(accessType: String) {
+        let authAlert = UIAlertController(title: "\(accessType) Access is Denied", message: "\(getAppName()) does not have access to your \(accessType). You can enable access in privacy settings.", preferredStyle: .alert)
+        NSLog("(2) %p", authAlert)
+        authAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         show(authAlert)
     }
     
     //MARK: - Helpers
     
-    private func getAppName() -> String {
-        return NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
+    fileprivate func getAppName() -> String {
+        return Bundle.main.infoDictionary!["CFBundleName"] as! String
     }
     
     //MARK: - Cropper
-    private func presentCropViewController(image: UIImage) {
-        let cropViewController = TOCropViewController(croppingStyle: .Circular, image: image)
-        cropViewController.delegate = self
-        self.parentVC.presentViewController(cropViewController, animated: true, completion: nil)
+    fileprivate func presentCropViewController(_ image: UIImage) {
+        let cropViewController = TOCropViewController(croppingStyle: .circular, image: image)
+        cropViewController?.delegate = self
+        self.parentVC.present(cropViewController!, animated: true, completion: nil)
     }
     
-    public func cropViewController(cropViewController: TOCropViewController!, didCropToCircularImage image: UIImage!, withRect cropRect: CGRect, angle: Int) {
-        //image is the new cropped image.
-        self.callback(image: image)
-        cropViewController.dismissViewControllerAnimated(true, completion: nil)
+    public func cropViewController(_ cropViewController: TOCropViewController!, didCropToCircularImage image: UIImage!, with cropRect: CGRect, angle: Int) {
+        self.callback(image)
+        cropViewController.dismiss(animated: true, completion: nil)
         IZImagePicker.currentInstance = nil
     }
     
-    private func didCancel() {
+    fileprivate func didCancel() {
         cancelled?()
         IZImagePicker.currentInstance = nil
     }
     
-    public func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        presentCropViewController(image)
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            presentCropViewController(image)
+        }
     }
     
-    public func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
+    open func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
         didCancel()
     }
 }
